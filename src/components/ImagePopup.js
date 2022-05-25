@@ -39,7 +39,7 @@ function ImagePopup(props) {
             type="button" aria-label="Закрыть">
           </button>
           <figure className="popup__image-window">
-            {props.card && (<img className="popup__image-url" src={props.card.link} alt="Изображение загружается" />)}
+            {props.card && (<img className="popup__image-url" src={props.card.link} alt={`${props.card.name}`} />)}
             {props.card && (<figcaption className="popup__image-name">{props.card.name}</figcaption>)}
           </figure>
         </div>
