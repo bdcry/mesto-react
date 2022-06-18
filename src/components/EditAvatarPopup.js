@@ -31,6 +31,16 @@ function EditAvatarPopup(props) {
       document.removeEventListener("mousedown", handleClickClose);
     };
   }, [props.isOpen]);
+
+  const avaRef = React.useRef();
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    props.onUpdateAvatar({ avatar: avaRef.current.value });
+  }
+  React.useEffect(() => {
+    avaRef.current.value = '';
+  },[props.isOpen])
   return (
     <PopupWithForm
       name="avatar"
@@ -38,11 +48,13 @@ function EditAvatarPopup(props) {
       text="Сохранить"
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <input
         id="avatar"
         type="url"
         name="link"
+        ref={avaRef}
         placeholder="Ссылка на картинку"
         className="popup__input popup__input_avatar_url"
         required

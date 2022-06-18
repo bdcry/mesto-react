@@ -31,6 +31,31 @@ function AddPlacePopup(props) {
       document.removeEventListener("mousedown", handleClickClose);
     };
   }, [props.isOpen]);
+
+  const [cardName, setCardName] = React.useState('');
+  const [cardLink, setCardLink] = React.useState('');
+
+  function handleChangeCardName(e) {
+    setCardName(e.target.value)
+  }
+
+  function handleChangeCardLink(e) {
+    setCardLink(e.target.value)
+  }
+
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+    // Передаём значения управляемых компонентов во внешний обработчик
+    props.onAddPlace({ 
+      name: cardName,
+      link: cardLink });
+  }
+
+  React.useEffect(() => {
+    setCardName('');
+    setCardLink('')
+  },[props.isOpen])
   return (
     <PopupWithForm
       name="add"
@@ -38,8 +63,11 @@ function AddPlacePopup(props) {
       text="Сохранить"
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <input
+        value={cardName || ''}
+        onChange={handleChangeCardName}
         id="card-name"
         type="text"
         name="name"
@@ -51,6 +79,8 @@ function AddPlacePopup(props) {
       />
       <span id="card-name-error" className="popup__error"></span>
       <input
+        value={cardLink ? cardLink : ''}
+        onChange={handleChangeCardLink}
         id="cardUrl"
         type="url"
         name="link"
